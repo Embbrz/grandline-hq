@@ -35,7 +35,7 @@ public class BountyClaim {
 	private pirates pirate;
 	
 	@ManyToOne
-	@JoinColumn(name = "hunter_id")
+	@JoinColumn(name = "bounty_hunter_id")
 	@NotNull(message = "bounty Hunter cannot Be null for a Bounty Claim!")
 	private BountyHunter bountyHunter;
 	

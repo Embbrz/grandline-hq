@@ -1,5 +1,7 @@
 package com.worldgovernment.grandline_hq.Entity;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class pirates {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private UUID id;
 	
 	@Column(name = "name", nullable = false, length = 255)
 	@NotBlank(message = "Pirate Name Cannot Be Blank")

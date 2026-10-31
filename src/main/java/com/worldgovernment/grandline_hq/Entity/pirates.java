@@ -15,9 +15,11 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
@@ -42,9 +44,10 @@ public class pirates {
 	
 	@Column(name = "status", nullable = false, length = 255)
 	@NotNull(message = "Status Cannot be Null")
+	@Setter(AccessLevel.NONE)
 	@NotBlank(message = "Status Cannot Be Blank")
 	@Size(max = 255, message = "Status Cannot be more than 255 Characters!")
-	private String status;
+	private String status = "WANTED";
 	
 	@Version
 	@Column(name = "version")
@@ -58,5 +61,12 @@ public class pirates {
 	@OneToOne
 	@JoinColumn(name = "devil_fruit_id")
 	private DevilFruit devilfruit;
+	
+	public void capture() {
+		this.status = "CAPTURED";
+	}
+	public void defeated() {
+		this.status = "DEFEATED";
+	}
 
 }

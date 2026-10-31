@@ -17,7 +17,7 @@ CREATE TABLE pirates (
 	name VARCHAR(255) NOT NULL,
 	current_bounty BIGINT NOT NULL,
 	
-	status VARCHAR(50) NOT NULL,
+	status VARCHAR(50) NOT NULL DEFAULT 'WANTED',
 	version BIGINT DEFAULT 0,
 	crew_id UUID REFERENCES crews(id),
 	devil_fruit_id UUID REFERENCES devil_fruits(id)

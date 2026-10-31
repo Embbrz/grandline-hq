@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.worldgovernment.grandline_hq.Entity.BountyClaim;
 import com.worldgovernment.grandline_hq.Entity.BountyHunter;
 import com.worldgovernment.grandline_hq.Entity.pirates;
+import com.worldgovernment.grandline_hq.Exception.BountyAlreadyClaimedException;
+import com.worldgovernment.grandline_hq.Exception.PirateNotFoundException;
 import com.worldgovernment.grandline_hq.Repository.bountyhunterrepository;
 import com.worldgovernment.grandline_hq.Repository.piraterepository;
 
@@ -30,10 +32,10 @@ public class BountyService {
 	@Transactional
 	public BountyClaim processBountyClaim(UUID pirateID, BountyHunter bountyHunter) {
 		pirates pirate = piraterepo.findByIdWithLock(pirateID)
-				.orElseThrow(() -> new RuntimeException("Sorry! Pirate Is not Eligible to Claim Bounty!"));
+				.orElseThrow(() -> new PirateNotFoundException("Sorry! Pirate with the ID " + pirateID +" does not Exist!"));
 		
 		if (!(pirate.getStatus().equals("WANTED"))) {
-			throw new RuntimeException("Pirate is No Longer Wanted!");
+			throw new BountyAlreadyClaimedException("Pirate is No Longer Wanted! Status: " + pirate.getStatus());
 		}
 		BountyClaim bountyClaim = new BountyClaim();
 		bountyClaim.setBountyHunter(bountyHunter);

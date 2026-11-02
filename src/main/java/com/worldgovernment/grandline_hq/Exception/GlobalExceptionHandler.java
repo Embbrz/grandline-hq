@@ -41,5 +41,22 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 	}
+	
+	
+	@ExceptionHandler(InvalidAmountException.class)
+	public ResponseEntity<Object> handleInvalidAmount(InvalidAmountException ex){
+		Map<String, Object> body = new HashMap<>();
+		
+		body.put("timestamp", LocalDateTime.now());
+		
+		body.put("status", HttpStatus.BAD_REQUEST.value());
+		
+		body.put("error", "Invalid Argument!");
+		
+		body.put("message", ex.getMessage());
+		
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+		
+	}
 
 }

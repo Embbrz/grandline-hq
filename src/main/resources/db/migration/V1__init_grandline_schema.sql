@@ -20,7 +20,7 @@ CREATE TABLE pirates (
 	status VARCHAR(50) NOT NULL DEFAULT 'WANTED',
 	version BIGINT DEFAULT 0,
 	crew_id UUID REFERENCES crews(id),
-	devil_fruit_id UUID REFERENCES devil_fruits(id)
+	devil_fruit_id UUID UNIQUE REFERENCES devil_fruits(id)
 );
 
 CREATE TABLE bounty_hunters (

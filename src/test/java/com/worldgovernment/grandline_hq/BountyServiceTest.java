@@ -52,7 +52,7 @@ public class BountyServiceTest {
 		when(bountyhunterrepo.save(any())).thenReturn(mockHunter);
 		when(piraterepo.findByIdWithLock(pirateId)).thenReturn(Optional.of(mockPirate));
 		
-		BountyClaim claim = bountyService.processBountyClaim(pirateId, mockHunter);
+		BountyClaim claim = bountyService.processBountyClaim(pirateId, true, mockHunter);
 		
 		assertNotNull(claim);
 		
@@ -73,7 +73,7 @@ public class BountyServiceTest {
 		when(piraterepo.findByIdWithLock(randomId)).thenReturn(Optional.empty());
 		
 		org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
-			bountyService.processBountyClaim(randomId, mockHunter);
+			bountyService.processBountyClaim(randomId, true, mockHunter);
 		});
 		
 		
@@ -102,12 +102,12 @@ public class BountyServiceTest {
 		when(piraterepo.save(any())).thenReturn(mockPirate);
 		when(bountyhunterrepo.save(any())).thenReturn(zoro).thenReturn(sanji);
 		
-		BountyClaim firstClaim = bountyService.processBountyClaim(pirateId, zoro);
+		BountyClaim firstClaim = bountyService.processBountyClaim(pirateId, true, zoro);
 		assertNotNull(firstClaim);
 		
 		org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, 
 				() -> {
-					bountyService.processBountyClaim(pirateId, sanji);
+					bountyService.processBountyClaim(pirateId, true, sanji);
 				});
 	}
 

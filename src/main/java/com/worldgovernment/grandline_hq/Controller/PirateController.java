@@ -33,7 +33,7 @@ public class PirateController {
 		return pirateService.getPirate(id);
 	}
 	
-	@PostMapping("/add")
+	@PostMapping("/add/pirates")
 	public pirates addPirate(@RequestBody pirates pirate) {
 		return pirateService.addPirate(pirate);
 	}

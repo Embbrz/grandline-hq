@@ -12,9 +12,11 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "crews")
@@ -39,6 +41,16 @@ public class Crew {
 	@Column(name = "total_bounty", nullable = false)
 	@NotNull(message = "total bounty cannot be null")
 	@Min(value = 0, message =  "Total bounty cannot be negative!")
+	@Setter(AccessLevel.NONE)
 	private Long totalBounty = 0L;
+	
+	
+	public void addTotalCrewBounty(Long amount) {
+		this.totalBounty += amount;
+	}
+	
+	public void subtractTotalCrewBounty(Long amount) {
+		this.totalBounty -= amount;
+	}
 
 }

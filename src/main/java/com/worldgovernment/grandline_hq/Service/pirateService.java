@@ -11,6 +11,7 @@ import com.worldgovernment.grandline_hq.Entity.DevilFruit;
 import com.worldgovernment.grandline_hq.Entity.pirates;
 import com.worldgovernment.grandline_hq.Exception.InvalidAmountException;
 import com.worldgovernment.grandline_hq.Exception.PirateNotFoundException;
+import com.worldgovernment.grandline_hq.Repository.CrewRepository;
 import com.worldgovernment.grandline_hq.Repository.FruitRepository;
 import com.worldgovernment.grandline_hq.Repository.piraterepository;
 
@@ -21,12 +22,14 @@ public class pirateService {
 	private piraterepository piraterepo;
 	private FruitRepository fruitRepo;
 	private FruitService fruitService;
+	private CrewRepository crewRepo;
 	
 	@Autowired
-	public pirateService(piraterepository pr, FruitRepository fr, FruitService fs) {
+	public pirateService(piraterepository pr, FruitRepository fr, FruitService fs, CrewRepository cr) {
 		this.fruitRepo = fr;
 		this.piraterepo = pr;
 		this.fruitService = fs;
+		this.crewRepo = cr;
 		
 	}
 	
@@ -88,6 +91,10 @@ public class pirateService {
 		pirates pirate = piraterepo.findById(id)
 				.orElseThrow(() -> new PirateNotFoundException("Pirate with ID: "+ id +" Not Found!"));
 		pirate.setCurrentBounty(pirate.getCurrentBounty() + amount);
+		if (!(pirate.getCrew() == null)) {
+			pirate.getCrew().addTotalCrewBounty(amount);
+			crewRepo.save(pirate.getCrew());
+		}
 		return piraterepo.save(pirate);
 	}
 	

@@ -9,13 +9,14 @@ CREATE TABLE devil_fruits (
 	id UUID PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	fruit_type VARCHAR(50) NOT NULL,
-	is_awakened BOOLEAN DEFAULT FALSE
+	is_consumed BOOLEAN DEFAULT false,
+	is_awakened BOOLEAN DEFAULT false
 );
 
 CREATE TABLE pirates (
 	id UUID PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
-	current_bounty BIGINT NOT NULL,
+	current_bounty BIGINT DEFAULT 0,
 	
 	status VARCHAR(50) NOT NULL DEFAULT 'WANTED',
 	version BIGINT DEFAULT 0,

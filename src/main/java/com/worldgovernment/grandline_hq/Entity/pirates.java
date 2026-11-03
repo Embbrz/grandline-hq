@@ -37,10 +37,9 @@ public class pirates {
 	@NotNull(message = "Pirate name Cannot be Null")
 	private String name;
 	
-	@Column(name = "current_bounty", nullable = false)
-	@NotNull(message = "Current bounty Cannot Be null")
+	@Column(name = "current_bounty")
 	@Min(value = 0, message = "Current Bounty cannot Be Lower than 0")
-	private Long currentBounty;
+	private Long currentBounty = 0L;
 	
 	@Column(name = "status", nullable = false, length = 255)
 	@NotNull(message = "Status Cannot be Null")

@@ -56,6 +56,7 @@ public class BountyService {
 		}
 		else {
 			pirate.defeated();
+			pirate.getDevilfruit().setIsConsumed(false);
 		}
 		bountyHunter.addBountyCash(bountyClaim.getRewardPaid());
 		

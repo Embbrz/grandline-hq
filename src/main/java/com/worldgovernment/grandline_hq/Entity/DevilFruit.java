@@ -38,7 +38,14 @@ public class DevilFruit {
 	@NotNull(message = "Fruit Type Cannot Be Null")
 	private String fruitType;
 	
+	@Column(name = "is_consumed")
+	private Boolean isConsumed = false;
+	
 	@Column(name = "is_awakened", nullable = false)
 	private Boolean isAwakened = false;
+	
+	public void setIsConsumed(Boolean boo) {
+		this.isConsumed = boo;
+	}
 
 }

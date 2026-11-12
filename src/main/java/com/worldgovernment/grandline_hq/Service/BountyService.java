@@ -1,35 +1,40 @@
 package com.worldgovernment.grandline_hq.Service;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.worldgovernment.grandline_hq.Entity.BountyClaim;
 import com.worldgovernment.grandline_hq.Entity.BountyHunter;
+import com.worldgovernment.grandline_hq.Entity.Crew;
 import com.worldgovernment.grandline_hq.Entity.pirates;
 import com.worldgovernment.grandline_hq.Exception.BountyAlreadyClaimedException;
 import com.worldgovernment.grandline_hq.Exception.PirateNotFoundException;
+
 import com.worldgovernment.grandline_hq.Repository.bountyClaimRepository;
 import com.worldgovernment.grandline_hq.Repository.bountyhunterrepository;
 import com.worldgovernment.grandline_hq.Repository.piraterepository;
 
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
 @Service
 public class BountyService {
 	
 	private piraterepository piraterepo;
 	private bountyhunterrepository bountyhunterrepo;
 	private bountyClaimRepository bountyClaimRepo;
+	private CrewService crewService;
+	
 
 	
 	@Autowired
-	public BountyService(piraterepository pr, bountyhunterrepository bh, bountyClaimRepository br) {
+	public BountyService(piraterepository pr, bountyhunterrepository bh, bountyClaimRepository br, CrewService cs) {
 		this.piraterepo = pr;
 		this.bountyhunterrepo = bh;
 		this.bountyClaimRepo = br;
+		this.crewService = cs;
+		
 	
 	}
 	
@@ -57,6 +62,11 @@ public class BountyService {
 		else {
 			pirate.defeated();
 			pirate.getDevilfruit().setIsConsumed(false);
+			if (!(pirate.getCrew() == null)) {
+				crewService.leaveCrew(pirate.getId(), pirate.getCrew().getId());
+
+				
+			}
 		}
 		bountyHunter.addBountyCash(bountyClaim.getRewardPaid());
 		

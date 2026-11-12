@@ -1,0 +1,8 @@
+CREATE TABLE marine_fleets (
+	id UUID PRIMARY KEY,
+	fleet_name VARCHAR(250) NOT NULL,
+	admiral_name VARCHAR(250) NOT NULL,
+	ship_count BIGINT NOT NULL DEFAULT 10,
+	assigned_sea VARCHAR(250) NOT NULL,
+	status VARCHAR(250) NOT NULL DEFAULT 'STANDBY'
+);

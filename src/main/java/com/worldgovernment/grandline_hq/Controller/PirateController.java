@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.worldgovernment.grandline_hq.Entity.pirates;
 import com.worldgovernment.grandline_hq.Service.pirateService;
+
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/pirates")
 public class PirateController {
@@ -34,7 +36,7 @@ public class PirateController {
 	}
 	
 	@PostMapping("/add/pirates")
-	public pirates addPirate(@RequestBody pirates pirate) {
+	public pirates addPirate(@Valid @RequestBody pirates pirate) {
 		return pirateService.addPirate(pirate);
 	}
 	

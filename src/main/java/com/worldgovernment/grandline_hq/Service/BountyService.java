@@ -54,8 +54,9 @@ public class BountyService {
 		BountyClaim bountyClaim = new BountyClaim();
 		bountyClaim.setBountyHunter(bountyHunter);
 		bountyClaim.setPirate(pirate);
-		bountyClaim.calculateReward();
 		bountyClaim.setPirateIsAlive(isAlive);
+		bountyClaim.calculateReward();
+		
 		if (bountyClaim.getPirateIsAlive()) {
 			pirate.capture();
 		}

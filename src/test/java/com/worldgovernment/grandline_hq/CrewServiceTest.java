@@ -248,7 +248,7 @@ public class CrewServiceTest {
 		when(pirateService.getPirate(captainID)).thenReturn(captain);
 		when(pirateService.getPirate(pirateID)).thenReturn(pirate);
 		when(pirateService.getPirate(sanjiID)).thenReturn(sanji);
-		when(pirateRepo.findByCrew(crewID)).thenReturn(List.of(captain, pirate, sanji));
+		when(pirateRepo.findByCrew(crew)).thenReturn(List.of(captain, pirate, sanji));
 		
 		when(crewRepo.findById(any())).thenReturn(Optional.of(crew));
 		
@@ -282,7 +282,7 @@ public class CrewServiceTest {
 		
 		when(pirateService.getPirate(any())).thenReturn(captain);
 		when(crewRepo.findById(any())).thenReturn(Optional.of(crew));
-		when(pirateRepo.findByCrew(crewID)).thenReturn(List.of(captain));
+		when(pirateRepo.findByCrew(crew)).thenReturn(List.of(captain));
 		
 		crewService.createCrew(crew);
 		crewService.leaveCrew(captainID, crewID);

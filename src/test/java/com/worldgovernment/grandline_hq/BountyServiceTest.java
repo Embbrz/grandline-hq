@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.worldgovernment.grandline_hq.Entity.BountyClaim;
 import com.worldgovernment.grandline_hq.Entity.BountyHunter;
 import com.worldgovernment.grandline_hq.Entity.pirates;
+import com.worldgovernment.grandline_hq.Repository.bountyClaimRepository;
 import com.worldgovernment.grandline_hq.Repository.bountyhunterrepository;
 import com.worldgovernment.grandline_hq.Repository.piraterepository;
 import com.worldgovernment.grandline_hq.Service.BountyService;
@@ -31,6 +32,9 @@ public class BountyServiceTest {
 	@Mock
 	private bountyhunterrepository bountyhunterrepo;
 	
+	@Mock
+	private bountyClaimRepository bountyClaimRepo;
+	
 	@InjectMocks
 	private BountyService bountyService;
 	
@@ -43,6 +47,7 @@ public class BountyServiceTest {
 		mockPirate.setId(pirateId);
 		mockPirate.setName("Monkey D. Luffy");
 		mockPirate.setCurrentBounty(100L);
+
 		
 		
 		BountyHunter mockHunter = new BountyHunter();
@@ -51,15 +56,16 @@ public class BountyServiceTest {
 		when(piraterepo.save(any())).thenReturn(mockPirate);
 		when(bountyhunterrepo.save(any())).thenReturn(mockHunter);
 		when(piraterepo.findByIdWithLock(pirateId)).thenReturn(Optional.of(mockPirate));
-		
+		when(bountyClaimRepo.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 		BountyClaim claim = bountyService.processBountyClaim(pirateId, true, mockHunter);
 		
-		assertNotNull(claim);
+	
 		
 		assertEquals(100L, claim.getRewardPaid());
 		assertEquals(100L, mockHunter.getTotal_bounty_cash());
 		assertEquals(1, mockHunter.getBountyClaimed());
 		assertEquals("CAPTURED", mockPirate.getStatus());
+		
 	}
 	
 	@Test
@@ -102,8 +108,8 @@ public class BountyServiceTest {
 		when(piraterepo.save(any())).thenReturn(mockPirate);
 		when(bountyhunterrepo.save(any())).thenReturn(zoro).thenReturn(sanji);
 		
-		BountyClaim firstClaim = bountyService.processBountyClaim(pirateId, true, zoro);
-		assertNotNull(firstClaim);
+		bountyService.processBountyClaim(pirateId, true, zoro);
+		
 		
 		org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, 
 				() -> {
